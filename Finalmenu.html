@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patio Restaurant</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff8f0;
+      color: #333;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .logo {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+    .logo-and-title {
+      display: flex;
+      align-items: center;
+    }
+    .restaurant-name {
+      font-family: 'Caveat', cursive;
+      font-size: 2rem;
+      color: rgb(255, 139, 10);
+      margin: 0;
+    }
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(to right, #ffe0e0, #fff3e0);
+    }
+    .hero h2 {
+      color: rgb(255, 139, 10);
+      font-size: 2rem;
+      margin: 0;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    nav button {
+      background: rgb(255, 139, 10);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 16px;
+      min-width: max-content;
+      flex-shrink: 0;
+      transition: background 0.3s ease;
+    }
+    nav button.active {
+      background: #cc0000;
+      font-weight: bold;
+    }
+    .menu-wrapper {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+    }
+    .menu-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(45deg, #ffeb3b, #ffc107, #ff9800, #ff5722);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+      z-index: -1;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-body h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+    .card-body p {
+      font-size: 14px;
+      margin: 0 0 10px;
+    }
+    .price {
+      color: rgb(255, 139, 10);
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #333;
+      color: white;
+      margin-top: 40px;
+      font-size: 1rem;
+    }
+    .social-links {
+      margin-top: 10px;
+    }
+    .social-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-and-title">
+      <img src="pimg.jpg" alt="Restaurant Logo" class="logo">
+      <h1 class="restaurant-name">Patio Restaurant</h1>
+    </div>
+  </header>
+  <section class="hero">
+    <h2>Explore Our Menu</h2>
+  </section>
+  <nav id="categoryNav"></nav>
+  <div class="menu-wrapper">
+    <div class="menu-bg"></div>
+    <main class="menu" id="menuContainer"></main>
+  </div>
+  <footer>
+    <p>&copy; 2025 Patio Restaurant. All rights reserved.</p>
+    <div class="social-links">
+        <a href="https://www.facebook.com/share/16tGhEytAk/"><img src="https://img.icons8.com/color/48/null/facebook-new.png"/></a>
+        <a href="https://www.instagram.com/patio_restaurant_darjeeling?igsh=dmVnNmRjcnlrcXht"><img src="https://img.icons8.com/fluency/48/null/instagram-new.png"/></a>    </div>
+  </footer>
+
+  <script>
+    const categories = [
+      "Breakfast",
+      "Indian cuisine",
+      "Beverages",
+      "Veg Starters",
+      "Nonveg Starters",
+      "Rice",
+      "Noodles",
+      "Local Favorites"
+    ];
+    const menuItems = {
+      "Breakfast": [
+        { name: "Taker's Delight", description: "A hearty breakfast platter with eggs, toast, bacon, and hash browns", price: "$9.99", image: "p1.png" },
+        { name: "Vegan Breakfast", description: "Plant-based breakfast with avocado toast, tofu scramble, and fruit", price: "$8.99", image: "p1.png" },
+        { name: "Creamy Oat Porridge", description: "Warm oatmeal served with honey, nuts, and berries", price: "$6.99", image: "p1.png" },
+        { name: "Muesli", description: "Classic Swiss muesli with fresh yogurt and seasonal fruits", price: "$7.49", image: "p1.png" },
+        { name: "Puri and Sabji", description: "Deep-fried puri served with spicy potato curry", price: "$5.99", image: "p1.png" },
+        { name: "Aloo Paratha", description: "Stuffed flatbread filled with spiced potatoes", price: "$4.99", image: "p1.png" },
+        { name: "Plain Omelet", description: "Simple three-egg omelet cooked to perfection", price: "$4.49", image: "p1.png" },
+        { name: "Cheese Omelet", description: "Three-egg omelet filled with melted cheese", price: "$5.49", image: "p1.png" },
+        { name: "Grilled Paneer Cheese Sandwich", description: "Toasty sandwich with paneer, veggies, and mayo", price: "$5.99", image: "p1.png" },
+        { name: "Chicken Cheese Sandwich", description: "Spicy chicken and cheese grilled sandwich", price: "$6.99", image: "p1.png" },
+        { name: "Chicken Sandwich", description: "Crispy chicken breast with lettuce, tomato, and mayonnaise", price: "$6.49", image: "p1.png" }
+      ],
+      "Indian cuisine": [
+        { name: "Paneer Malai Kofta", description: "Soft paneer dumplings in creamy gravy", price: "$12.99", image: "p1.png" },
+        { name: "Matar Paneer", description: "Paneer cubes and green peas in rich tomato sauce", price: "$11.99", image: "p1.png" },
+        { name: "Paneer Butter Masala", description: "Rich and creamy paneer curry in butter tomato sauce", price: "$12.49", image: "p1.png" },
+        { name: "Chicken Tikka Masala", description: "Grilled chicken in spiced tomato cream sauce", price: "$13.99", image: "p1.png" },
+        { name: "Chicken Hyderabadi", description: "Spicy chicken curry with a royal flavor", price: "$13.49", image: "p1.png" },
+        { name: "Chicken Butter Masala", description: "Luscious chicken curry with butter and cream", price: "$13.99", image: "p1.png" },
+        { name: "Chicken Karahi", description: "Wok-cooked chicken with bell peppers and tomatoes", price: "$12.99", image: "p1.png" },
+        { name: "Chicken Curry", description: "Classic Indian-style chicken curry", price: "$11.99", image: "p1.png" },
+        { name: "Egg Curry", description: "Boiled egg simmered in aromatic Indian spices", price: "$9.99", image: "p1.png" },
+        { name: "Fish Curry", description: "Spicy fish stew in traditional South Indian style", price: "$12.99", image: "p1.png" },
+        { name: "Tawa Roti (1 pc)", description: "Handmade unleavened bread", price: "$1.49", image: "p1.png" },
+        { name: "Butter Tawa Roti (1 pc)", description: "Tawa roti brushed with butter", price: "$1.99", image: "p1.png" },
+        { name: "Paneer Paratha (1 pc)", description: "Flatbread stuffed with spiced paneer", price: "$2.99", image: "p1.png" },
+        { name: "Lachha Paratha (1 pc)", description: "Flaky multi-layered paratha", price: "$2.49", image: "p1.png" },
+        { name: "Masala Kulcha", description: "Leavened bread stuffed with spiced potatoes", price: "$2.99", image: "p1.png" }
+      ],
+      "Beverages": [
+        { name: "Cappuccino", description: "Espresso with steamed milk foam", price: "$3.99", image: "p1.png" },
+        { name: "Cinnamon Apple Banana Smoothie", description: "Blended banana, apple, cinnamon, and yogurt", price: "$4.99", image: "p1.png" },
+        { name: "Matcha Banana Smoothie", description: "Banana blended with matcha green tea and almond milk", price: "$5.49", image: "p1.png" },
+        { name: "Banana Coconut Yogurt Smoothie", description: "Banana, coconut, and yogurt for a tropical twist", price: "$5.29", image: "p1.png" },
+        { name: "Nutty Banana Milkshake", description: "Banana shake with peanut butter and crushed nuts", price: "$5.99", image: "p1.png" },
+        { name: "Tiger Hill Sunrise (Mocktail)", description: "Citrus mocktail with grenadine and orange juice", price: "$4.99", image: "p1.png" },
+        { name: "Sat Summa Cooler", description: "Refreshing mint-lime cooler", price: "$3.99", image: "p1.png" },
+        { name: "The Green Fairy", description: "Green smoothie with spinach, kiwi, and mango", price: "$5.49", image: "p1.png" },
+        { name: "Coconut Blast", description: "Pure coconut water with a splash of pineapple", price: "$4.49", image: "p1.png" },
+        { name: "The Peach Affair", description: "Sweet peach and mango smoothie", price: "$5.29", image: "p1.png" },
+        { name: "Coffee & Coconut Water", description: "Iced coffee mixed with coconut water", price: "$4.99", image: "p1.png" }
+      ],
+      "Veg Starters": [
+        { name: "French Fries", description: "Golden crispy fries", price: "$3.99", image: "p1.png" },
+        { name: "Peri Peri French Fries", description: "Fries tossed in spicy peri-peri seasoning", price: "$4.99", image: "p1.png" },
+        { name: "Cheese French Fries", description: "Fries topped with melted cheese", price: "$5.49", image: "p1.png" },
+        { name: "Crispy Veg Spicy", description: "Mixed vegetables battered and fried with chili seasoning", price: "$5.99", image: "p1.png" },
+        { name: "Chili Mushroom", description: "Sautéed mushrooms in spicy chili sauce", price: "$6.49", image: "p1.png" },
+        { name: "Chili Paneer", description: "Paneer cubes sautéed in tangy chili sauce", price: "$6.99", image: "p1.png" },
+        { name: "Salt and Pepper Corn", description: "Corn tossed with salt and pepper", price: "$4.99", image: "p1.png" }
+      ],
+      "Nonveg Starters": [
+        { name: "Prawn Tempura", description: "Lightly battered and deep-fried prawns", price: "$7.99", image: "p1.png" },
+        { name: "Chili Prawn", description: "Prawns stir-fried in spicy chili sauce", price: "$8.49", image: "p1.png" },
+        { name: "Crispy Chicken Katsu", description: "Breaded and fried chicken cutlet", price: "$7.99", image: "p1.png" },
+        { name: "Crispy Pork Katsu", description: "Japanese-style breaded pork cutlet", price: "$8.99", image: "p1.png" },
+        { name: "Dragon Chicken", description: "Crispy chicken in sweet and spicy glaze", price: "$8.49", image: "p1.png" },
+        { name: "Crispy Chicken", description: "Double-fried chicken with golden crust", price: "$7.49", image: "p1.png" },
+        { name: "Thai Fried Chicken", description: "Spicy Thai-seasoned fried chicken", price: "$7.99", image: "p1.png" },
+        { name: "Bali Prawns", description: "Prawns cooked in Balinese-style spices", price: "$8.99", image: "p1.png" },
+        { name: "Butter Garlic Prawn", description: "Prawns in garlic butter sauce", price: "$9.49", image: "p1.png" },
+        { name: "Chicken Spring Roll", description: "Crispy rolls filled with shredded chicken", price: "$5.99", image: "p1.png" },
+        { name: "Chicken Dragon Roll", description: "Chicken roll with spicy dragon sauce", price: "$6.49", image: "p1.png" }
+      ],
+      "Noodles": [
+        { name: "Hakka Noodles", description: "Stir-fried noodles with mixed veggies", price: "$7.99", image: "p1.png" },
+        { name: "Hakka Noodles Chicken", description: "Chicken stir-fried with noodles and veggies", price: "$9.49", image: "p1.png" },
+        { name: "Hakka Noodles Pork", description: "Pork stir-fried with noodles and veggies", price: "$9.99", image: "p1.png" },
+        { name: "Hakka Noodles Prawn", description: "Prawn stir-fried with noodles and veggies", price: "$10.49", image: "p1.png" },
+        { name: "Hakka Noodles Mixed", description: "Mixed meat and veg stir-fried noodles", price: "$10.99", image: "p1.png" },
+        { name: "Chili Garlic Noodles Chicken", description: "Spicy noodles with chicken and garlic", price: "$9.99", image: "p1.png" },
+        { name: "Chili Garlic Noodles Veg", description: "Spicy noodles with mixed vegetables", price: "$8.99", image: "p1.png" },
+        { name: "Chili Garlic Flat Rice Noodles Veg", description: "Flat rice noodles with veggies and chili garlic", price: "$9.49", image: "p1.png" }
+      ],
+      "Rice": [
+        { name: "Veg Fried Rice", description: "Wok-fried rice with mixed vegetables", price: "$6.99", image: "p1.png" },
+        { name: "Chicken Fried Rice", description: "Fried rice with diced chicken and veggies", price: "$7.99", image: "p1.png" },
+        { name: "Pork Fried Rice", description: "Fried rice with diced pork and veggies", price: "$8.49", image: "p1.png" },
+        { name: "Prawn Fried Rice", description: "Fried rice with prawns and mixed veggies", price: "$9.49", image: "p1.png" },
+        { name: "Mixed Fried Rice", description: "Fried rice with chicken, pork, prawn, and veggies", price: "$10.49", image: "p1.png" },
+        { name: "Chili Garlic Fried Rice Chicken", description: "Spicy fried rice with chicken and garlic", price: "$9.99", image: "p1.png" },
+        { name: "Chili Garlic Fried Rice Pork", description: "Spicy fried rice with pork and garlic", price: "$10.49", image: "p1.png" },
+        { name: "Chili Garlic Fried Rice Prawn", description: "Spicy fried rice with prawns and garlic", price: "$10.99", image: "p1.png" }
+      ],
+      "Local Favorites": [
+        { name: "Thukpa", description: "Tibetan noodle soup with vegetables", price: "$6.99", image: "p1.png" },
+        { name: "Chicken Thukpa", description: "Chicken noodle soup with herbs", price: "$7.99", image: "p1.png" },
+        { name: "Pork Thukpa", description: "Pork noodle soup with traditional flavors", price: "$8.49", image: "p1.png" },
+        { name: "Vegetable Momo (8 pcs)", description: "Steamed dumplings with vegetable filling", price: "$6.99", image: "p1.png" },
+        { name: "Chicken Momo (8 pcs)", description: "Steamed dumplings with chicken filling", price: "$7.99", image: "p1.png" },
+        { name: "Spiced Pork Momo (8 pcs)", description: "Spicy pork-filled dumplings", price: "$8.49", image: "p1.png" }
+      ]
+    };
+
+    const categoryNav = document.getElementById("categoryNav");
+    const menuContainer = document.getElementById("menuContainer");
+    let activeButton = null;
+
+    categories.forEach(category => {
+      const btn = document.createElement("button");
+      btn.textContent = category;
+      btn.onclick = () => {
+        if (activeButton) activeButton.classList.remove("active");
+        btn.classList.add("active");
+        activeButton = btn;
+        showMenu(category);
+      };
+      if (category === "Breakfast") {
+        btn.classList.add("active");
+        activeButton = btn;
+      }
+      categoryNav.appendChild(btn);
+    });
+
+    function showMenu(category) {
+      menuContainer.innerHTML = "";
+      menuItems[category].forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div class="card-body">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <div class="price">${item.price}</div>
+          </div>
+        `;
+        menuContainer.appendChild(card);
+      });
+    }
+
+    // Show Breakfast by default
+    showMenu("Breakfast");
+  </script>
+</body>
+</html>
